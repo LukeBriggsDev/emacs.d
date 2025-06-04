@@ -1,11 +1,6 @@
 #+title: Emacs Config
 #+author: Luke
 
-#+begin_src emacs-lisp
-  (use-package esup
-    :load-path "packages/esup")
-#+end_src
-
 * General Setup
 
 Compat
