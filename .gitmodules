@@ -1,0 +1,75 @@
+[submodule "packages/spacious-padding"]
+	path = packages/spacious-padding
+	url = https://github.com/protesilaos/spacious-padding
+[submodule "packages/rainbow-delimiters"]
+	path = packages/rainbow-delimiters
+	url = https://github.com/Fanael/rainbow-delimiters
+[submodule "packages/olivetti"]
+	path = packages/olivetti
+	url = https://github.com/rnkn/olivetti
+[submodule "packages/magit"]
+	path = packages/magit
+	url = https://github.com/magit/magit.git
+[submodule "packages/llama"]
+	path = packages/llama
+	url = https://github.com/tarsius/llama.git
+[submodule "packages/with-editor"]
+	path = packages/with-editor
+	url = https://github.com/magit/with-editor
+[submodule "packages/transient"]
+	path = packages/transient
+	url = https://github.com/magit/transient
+[submodule "packages/evil"]
+	path = packages/evil
+	url = https://github.com/emacs-evil/evil
+[submodule "packages/projectile"]
+	path = packages/projectile
+	url = https://github.com/bbatsov/projectile
+[submodule "packages/vertico"]
+	path = packages/vertico
+	url = https://github.com/minad/vertico
+[submodule "packages/orderless"]
+	path = packages/orderless
+	url = https://github.com/oantolin/orderless
+[submodule "packages/marginalia"]
+	path = packages/marginalia
+	url = https://github.com/minad/marginalia
+[submodule "packages/compat"]
+	path = packages/compat
+	url = https://github.com/emacs-compat/compat
+[submodule "packages/corfu"]
+	path = packages/corfu
+	url = https://github.com/minad/corfu
+[submodule "packages/emacs-corfu-terminal"]
+	path = packages/emacs-corfu-terminal
+	url = https://codeberg.org/akib/emacs-corfu-terminal
+[submodule "packages/emacs-popon"]
+	path = packages/emacs-popon
+	url = https://codeberg.org/akib/emacs-popon
+[submodule "packages/markdown-mode"]
+	path = packages/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode
+[submodule "packages/org-modern"]
+	path = packages/org-modern
+	url = https://github.com/minad/org-modern
+[submodule "packages/mixed-pitch"]
+	path = packages/mixed-pitch
+	url = https://gitlab.com/jabranham/mixed-pitch
+[submodule "packages/ef-themes"]
+	path = packages/ef-themes
+	url = https://github.com/protesilaos/ef-themes
+[submodule "packages/vundo"]
+	path = packages/vundo
+	url = https://github.com/casouri/vundo
+[submodule "packages/apheleia"]
+	path = packages/apheleia
+	url = git@github.com:radian-software/apheleia.git
+[submodule "packages/rust-mode"]
+	path = packages/rust-mode
+	url = https://github.com/rust-lang/rust-mode
+[submodule "packages/zig-mode"]
+	path = packages/zig-mode
+	url = https://github.com/ziglang/zig-mode
+[submodule "packages/emacs-reformatter"]
+	path = packages/emacs-reformatter
+	url = https://github.com/purcell/emacs-reformatter

@@ -1,0 +1,7 @@
+*~
+eln-cache
+eshell
+elpa
+config.el
+projectile-bookmarks.eld
+tree-sitter/*

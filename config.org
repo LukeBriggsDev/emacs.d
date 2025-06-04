@@ -1,0 +1,537 @@
+#+title: Emacs Config
+#+author: Luke
+
+#+begin_src emacs-lisp
+  (use-package esup
+    :load-path "packages/esup")
+#+end_src
+
+* General Setup
+
+Compat
+
+#+begin_src emacs-lisp
+  (use-package compat
+    :load-path "package/compat/")
+#+end_src
+
+#+begin_src emacs-lisp
+  ;; Instruct auto-save-mode to save to the current file, not a backup file
+  (setq auto-save-default nil)
+
+  ;; No backup files
+  (setq make-backup-files nil)
+
+  ;; Enable mouse events in the terminal
+  (xterm-mouse-mode t)
+
+  ;; Delete trailing whitespace before saving buffers
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+** Warnings
+
+Turn off warnings to avoid treemacs window errors:
+
+#+begin_src emacs-lisp
+  (setq warning-minimum-level :emergency)
+#+end_src
+
+
+* Appearance
+
+** Font
+
+#+begin_src emacs-lisp
+    (set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono")
+    (set-face-attribute 'variable-pitch nil :family "IBM Plex Sans")
+
+    (use-package mixed-pitch
+      :load-path "packages/mixed-pitch"
+      :hook
+      ;; If you want it in all text modes:
+      (text-mode . mixed-pitch-mode))
+
+    (defun my-org-faces ()
+      (set-face-attribute 'org-todo nil :height 0.8)
+      (set-face-attribute 'org-level-1 nil :height 1.5)
+      (set-face-attribute 'org-level-2 nil :height 1.4)
+      (set-face-attribute 'org-level-3 nil :height 1.2))
+
+    (defun my-md-faces ()
+      (set-face-attribute 'markdown-header-face-1 nil :height 1.5)
+      (set-face-attribute 'markdown-header-face-2 nil :height 1.4)
+      (set-face-attribute 'markdown-header-face-3 nil :height 1.2))
+
+
+    (add-hook 'org-mode-hook #'my-org-faces)
+    (add-hook 'markdown-mode-hook #'my-md-faces)
+
+#+end_src
+
+** Theme
+
+Ef-themes:
+
+#+begin_src emacs-lisp
+  (use-package ef-themes
+    :load-path "packages/ef-themes/")
+  (load-theme 'ef-autumn t)
+#+end_src
+
+** UI
+
+#+begin_src emacs-lisp
+  (setq inhibit-splash-screen t)
+  (tool-bar-mode -1)
+  (scroll-all-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
+
+Display line numbers and set line number gutter to prevent jitter between digit lengths:
+
+#+begin_src emacs-lisp
+  (setq display-line-numbers-type 'relative)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (setq display-line-numbers-width-start t)
+  (setq display-line-numbers-grow-only t)
+#+end_src
+
+Truncate lines:
+
+#+begin_src  emacs-lisp
+  (setq-default truncate-partial-width-windows nil)
+  (setq-default truncate-lines t)
+#+end_src
+
+Turn cursor into bar:
+
+#+begin_src emacs-lisp
+  (setq-default cursor-type 'bar)
+#+end_src
+
+Use =rainbow-delimiters= for colourful braces:
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :load-path "packages/rainbow-delimiters"
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+Install Olivetti mode for distraction free writing:
+
+#+begin_src emacs-lisp
+  (use-package olivetti
+    :load-path "packages/olivetti"
+    :config
+    (setq olivetti-body-width 90)
+    (setq olivetti-minimum-body-width 72))
+#+end_src
+
+Make vertical window separators look nicer in terminal Emacs:
+
+#+begin_src emacs-lisp
+  (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
+
+#+end_src
+
+** Modeline
+
+Turn off load average:
+
+#+begin_src emacs-lisp
+  (setq display-time-default-load-average nil)
+#+end_src
+
+Display column number and time:
+
+#+begin_src emacs-lisp
+  (column-number-mode t)
+  (display-time-mode)
+  (setq display-time-format "%H:%M")
+#+end_src
+
+Turn off modeline percent position::
+
+#+begin_src emacs-lisp
+  (setq mode-line-percent-position nil)
+#+end_src
+
+
+* Control
+
+Configure control changes and key maps.
+
+Enable spacious padding:
+
+#+begin_src emacs-lisp
+  (use-package spacious-padding
+    :load-path "packages/spacious-padding/")
+
+  (setq spacious-padding-widths '(:internal-border-width 16
+  						       :header-line-width 4
+  						       :mode-line-width 4
+  						       :tab-width 4
+  						       :right-divider-width 8
+  						       :scroll-bar-width 0
+  						       :fringe-width 8))
+
+  (spacious-padding-mode 1)
+#+end_src
+
+Allow horizontal scrolling with touchpad:
+
+#+begin_src emacs-lisp
+  (global-set-key
+   [wheel-right] #'(lambda ()
+  		   (interactive)
+  		   (scroll-right 1)))
+  (global-set-key
+   [wheel-left] #'(lambda ()
+  		  (interactive)
+  		  (scroll-left 1)))
+#+end_src
+
+Enable replacing selected text when pasting:
+
+#+begin_src emacs-lisp
+  (delete-selection-mode)
+#+end_src
+
+Enable pixel scrolling:
+
+#+begin_src emacs-lisp
+  (pixel-scroll-precision-mode t)
+#+end_src
+
+Enable Windmove shift-arrow navigation
+
+#+begin_src emacs-lisp
+  (windmove-default-keybindings)
+#+end_src
+
+Set tab width:
+
+#+begin_src emacs-lisp
+  (setq-default tab-width 4)
+#+end_src
+
+Enable CUA mode:
+
+#+begin_src emacs-lisp
+  (cua-mode t)
+#+end_src
+
+Set scroll margin:
+
+#+begin_src emacs-lisp
+  (setq scroll-margin 8)
+#+end_src
+
+Set scroll a line at a time:
+
+#+begin_src emacs-lisp
+  (setq scroll-step 1)
+  (setq scroll-conservatively 10000)
+  (setq auto-window-vscroll nil)
+#+end_src
+
+** Evil Mode
+
+#+begin_src emacs-lisp
+  (use-package evil
+    :load-path "packages/evil/"
+    :config (evil-mode t))
+#+end_src
+
+Fix cursor not changing in terminal:
+
+#+begin_src emacs-lisp
+  (unless (display-graphic-p)
+    (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
+    (add-hook 'evil-insert-state-exit-hook  (lambda () (send-string-to-terminal "\033[2 q")))
+    )
+#+end_src
+
+* Text Editing
+
+** General
+
+Enable bracket pairing:
+
+#+begin_src emacs-lisp
+  (electric-pair-mode t)
+#+end_src
+
+Enable auto-revert mode to update files changed externally to emacs:
+
+#+begin_src emacs-lisp
+  (global-auto-revert-mode)
+#+end_src
+
+No tabs:
+
+#+begin_src emacs-lisp
+  (setq indent-tabs-mode nil)
+#+end_src
+
+Set tab-width:
+
+#+begin_src emacs-lisp
+  (setq tab-width 4)
+#+end_src
+
+** Apheleia Formatting
+
+#+begin_src emacs-lisp
+  (use-package apheleia
+    :load-path "packages/apheleia"
+    :config
+    (apheleia-global-mode t))
+#+end_src
+
+** Undo-Tree
+
+#+begin_src emacs-lisp
+  (use-package vundo
+    :load-path "packages/vundo/")
+#+end_src
+
+* Project Management
+
+** Git
+
+Magit
+
+#+begin_src emacs-lisp
+  (use-package llama
+    :load-path "packages/llama/")
+
+  (use-package with-editor
+    :load-path "packages/with-editor/lisp/")
+
+  (use-package transient
+    :load-path "packages/transient/lisp/")
+
+  (use-package magit
+    :load-path "packages/magit/lisp/"
+    :after llama with-editor transient)
+#+end_src
+
+Projectile
+
+#+begin_src emacs-lisp
+  (use-package projectile
+    :load-path "packages/projectile/"
+    :commands projectile-mode
+    :init
+    (projectile-mode t))
+#+end_src
+
+* Completion
+
+** Vertico
+
+#+begin_src emacs-lisp
+  (use-package vertico
+    :load-path "packages/vertico/"
+    :config
+    (vertico-mode)
+    :custom
+
+    ;; Support opening new minibuffers from inside existing minibuffers.
+    (enable-recursive-minibuffers t)
+    ;; Hide commands in M-x which do not work in the current mode.  Vertico
+    ;; commands are hidden in normal buffers. This setting is useful beyond
+    ;; Vertico.
+    (read-extended-command-predicate #'command-completion-default-include-p)
+    ;; Do not allow the cursor in the minibuffer prompt
+    (minibuffer-prompt-properties
+     '(read-only t cursor-intangible t face minibuffer-prompt)))
+#+end_src
+
+** Odorless
+
+#+begin_src emacs-lisp
+  (use-package orderless
+    :load-path "packages/orderless/"
+    :custom
+    ;; Configure a custom style dispatcher (see the Consult wiki)
+    ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
+    ;; (orderless-component-separator #'orderless-escapable-split-on-space)
+    (completion-styles '(orderless basic))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
+** Marginalia
+
+#+begin_src emacs-lisp
+  ;; Enable rich annotations using the Marginalia package
+  (use-package marginalia
+    :load-path "packages/marginalia/"
+    ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+    ;; available in the *Completions* buffer, add it to the
+    ;; `completion-list-mode-map'.
+    :bind (:map minibuffer-local-map
+  	      ("M-A" . marginalia-cycle))
+    :commands marginalia-mode
+    ;; The :init section is always executed.
+    :init
+
+    ;; Marginalia must be activated in the :init section of use-package such that
+    ;; the mode gets enabled right away. Note that this forces loading the
+    ;; package.
+    (marginalia-mode))
+#+end_src
+
+** Corfu
+
+#+begin_src emacs-lisp
+  (use-package corfu
+    :load-path "packages/corfu"
+    :commands global-corfu-mode
+    :init
+    (global-corfu-mode)
+    :custom
+    (corfu-auto t
+      	      corfu-quit-no-match 'separator
+      	      )
+    )
+
+
+  (use-package corfu-info
+    :load-path "packages/corfu/extensions")
+
+
+  (use-package corfu-popupinfo
+    :load-path "packages/corfu/extensions"
+    :after corfu
+    :hook (corfu-mode . corfu-popupinfo-mode)
+    :config
+    (setq corfu-popupinfo-delay '(1.0 . 0.2))
+    (corfu-popupinfo-mode t))
+
+#+end_src
+
+** Corfu-Terminal
+
+#+begin_src emacs-lisp
+  (use-package popon
+    :load-path "packages/emacs-popon"
+    )
+
+
+  (use-package corfu-terminal
+    :load-path "packages/emacs-corfu-terminal"
+    :after popon
+    :config
+    (unless (display-graphic-p)
+      (corfu-terminal-mode t))
+    )
+#+end_src
+
+* Languages
+
+** Markdown
+
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :load-path "packages/markdown-mode")
+#+end_src
+
+** Org
+
+
+#+begin_src emacs-lisp
+  (setq org-startup-indented t
+        org-pretty-entities t
+        org-use-sub-superscripts "{}"
+        org-hide-emphasis-markers t
+        org-startup-with-inline-images t
+        org-image-actual-width '(300))
+#+end_src
+
+Org Modern
+
+#+begin_src emacs-lisp
+  (use-package org-modern
+    :load-path "packages/org-modern"
+    :hook
+    (org-mode . global-org-modern-mode)
+    :custom
+    (org-modern-keyword nil)
+    (org-modern-checkbox nil)
+    (org-modern-table nil))
+#+end_src
+
+** C/C++
+
+Set TS as default mode:
+
+#+begin_src emacs-lisp
+  (setq major-mode-remap-alist
+        '((c-mode . c-ts-mode)))
+
+  (setq major-mode-remap-alist
+        '((c++-mode . c++-ts-mode)))
+
+  (add-hook 'c-mode-hook 'eglot-ensure)
+  (add-hook 'c++-ts-mode-hook 'eglot-ensure)
+
+#+end_src
+
+** Python
+
+Set TS as default mode:
+
+#+begin_src emacs-lisp
+  (setq major-mode-remap-alist
+        '((python-mode . python-ts-mode)))
+#+end_src
+
+Attach eglot:
+
+#+begin_src emacs-lisp
+  (add-hook 'python-ts-mode-hook 'eglot-ensure)
+#+end_src
+
+** Rust
+
+#+begin_src emacs-lisp
+  (use-package rust-mode
+    :load-path "packages/rust-mode"
+    :init
+    (setq rust-mode-treesitter-derive t)
+    :config
+    (autoload 'rust-mode "rust-mode" nil t)
+    (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+    (setq rust-format-on-save t)
+    (add-hook 'rust-mode-hook 'eglot-ensure))
+#+end_src
+
+** Go
+
+#+begin_src emacs-lisp
+  (setq major-mode-remap-alist
+        '((go-mode . go-ts-mode)))
+
+  (add-hook 'go-ts-mode-hook 'eglot-ensure)
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
+#+end_src
+
+** Zig
+
+#+begin_src emacs-lisp
+  (use-package reformatter
+    :load-path "packages/emacs-reformatter/")
+
+  (use-package zig-mode
+    :load-path "packages/zig-mode/"
+    :commands zig-mode
+    :init
+    (autoload 'zig-mode "zig-mode" nil t)
+    (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
+    (add-hook 'zig-mode-hook 'eglot-ensure))
+#+end_src
