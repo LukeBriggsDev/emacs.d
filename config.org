@@ -71,7 +71,7 @@ Ef-themes:
 #+begin_src emacs-lisp
   (use-package ef-themes
     :load-path "packages/ef-themes/")
-  (load-theme 'ef-autumn t)
+  (load-theme 'ef-cyprus t)
 #+end_src
 
 ** UI
