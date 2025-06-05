@@ -63,7 +63,7 @@
 	url = https://github.com/casouri/vundo
 [submodule "packages/apheleia"]
 	path = packages/apheleia
-	url = git@github.com:radian-software/apheleia.git
+	url = https://github.com/radian-software/apheleia
 [submodule "packages/rust-mode"]
 	path = packages/rust-mode
 	url = https://github.com/rust-lang/rust-mode
