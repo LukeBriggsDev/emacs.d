@@ -71,8 +71,12 @@ Ef-themes:
 #+begin_src emacs-lisp
   (use-package ef-themes
     :load-path "packages/ef-themes/")
-  (load-theme 'ef-cyprus t)
-#+end_src
+
+; Select theme based on time
+  (if (> (string-to-number (format-time-string "%H")) 18 )
+      (load-theme 'ef-autumn t)
+    (load-theme 'ef-cyprus t))
+      #+end_src
 
 ** UI
 
@@ -193,12 +197,6 @@ Enable replacing selected text when pasting:
   (delete-selection-mode)
 #+end_src
 
-Enable pixel scrolling:
-
-#+begin_src emacs-lisp
-  (pixel-scroll-precision-mode t)
-#+end_src
-
 Enable Windmove shift-arrow navigation
 
 #+begin_src emacs-lisp
@@ -221,14 +219,6 @@ Set scroll margin:
 
 #+begin_src emacs-lisp
   (setq scroll-margin 8)
-#+end_src
-
-Set scroll a line at a time:
-
-#+begin_src emacs-lisp
-  (setq scroll-step 1)
-  (setq scroll-conservatively 10000)
-  (setq auto-window-vscroll nil)
 #+end_src
 
 ** Evil Mode
@@ -345,21 +335,7 @@ Projectile
      '(read-only t cursor-intangible t face minibuffer-prompt)))
 #+end_src
 
-** Odorless
-
-#+begin_src emacs-lisp
-  (use-package orderless
-    :load-path "packages/orderless/"
-    :custom
-    ;; Configure a custom style dispatcher (see the Consult wiki)
-    ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
-    ;; (orderless-component-separator #'orderless-escapable-split-on-space)
-    (completion-styles '(orderless basic))
-    (completion-category-defaults nil)
-    (completion-category-overrides '((file (styles partial-completion)))))
-#+end_src
-
-** Marginalia
+*** Marginalia
 
 #+begin_src emacs-lisp
   ;; Enable rich annotations using the Marginalia package
@@ -390,8 +366,10 @@ Projectile
     (global-corfu-mode)
     :custom
     (corfu-auto t
-      	      corfu-quit-no-match 'separator
-      	      )
+              corfu-quit-no-match 'separator
+  			corfu-auto-delay 0.1
+  			corfu-auto-prefix 0.1
+              )
     )
 
 
@@ -424,6 +402,16 @@ Projectile
     (unless (display-graphic-p)
       (corfu-terminal-mode t))
     )
+#+end_src
+
+** Eldoc Box
+
+#+begin_src emacs-lisp
+  (use-package eldoc-box
+    :load-path "packages/eldoc-box"
+    :config
+    (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t)
+    (eldoc-box-hover-mode))
 #+end_src
 
 * Languages
@@ -488,6 +476,7 @@ Set TS as default mode:
 Attach eglot:
 
 #+begin_src emacs-lisp
+  (add-hook 'python-ts-mode-hook 'eglot-ensure)
   (add-hook 'python-ts-mode-hook 'eglot-ensure)
 #+end_src
 

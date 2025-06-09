@@ -5,3 +5,7 @@ elpa
 config.el
 projectile-bookmarks.eld
 tree-sitter/*
+transient/*
+projects
+tramp
+url
