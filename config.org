@@ -72,10 +72,9 @@ Ef-themes:
   (use-package ef-themes
     :load-path "packages/ef-themes/")
 
-; Select theme based on time
-  (if (> (string-to-number (format-time-string "%H")) 18 )
-      (load-theme 'ef-autumn t)
-    (load-theme 'ef-cyprus t))
+   ; Use light theme between 5AM and 7PM, otherwise load dark theme
+    (run-at-time "05:00" t (lambda () (load-theme 'ef-cyprus t)))
+    (run-at-time "19:00" t (lambda () (load-theme 'ef-autumn t)))
       #+end_src
 
 ** UI
