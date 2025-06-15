@@ -73,3 +73,18 @@
 [submodule "packages/eldoc-box"]
 	path = packages/eldoc-box
 	url = https://github.com/casouri/eldoc-box
+[submodule "packages/dape"]
+	path = packages/dape
+	url = https://github.com/svaante/dape
+[submodule "packages/emacs-pet"]
+	path = packages/emacs-pet
+	url = https://github.com/wyuenho/emacs-pet.git
+[submodule "packages/f.el"]
+	path = packages/f.el
+	url = https://github.com/rejeep/f.el
+[submodule "packages/s.el"]
+	path = packages/s.el
+	url = https://github.com/magnars/s.el
+[submodule "packages/dash.el"]
+	path = packages/dash.el
+	url = https://github.com/magnars/dash.el.git

@@ -29,7 +29,7 @@ Compat
 Turn off warnings to avoid treemacs window errors:
 
 #+begin_src emacs-lisp
-  (setq warning-minimum-level :emergency)
+  ;(setq warning-minimum-level :emergency)
 #+end_src
 
 
@@ -413,6 +413,25 @@ Projectile
     (eldoc-box-hover-mode))
 #+end_src
 
+* Debugging
+
+#+begin_src emacs-lisp
+  (use-package dape
+    :load-path "packages/dape"
+    :config
+    (setq dape-debug t)
+    (dape-breakpoint-global-mode)
+    ;; Info buffers like gud (gdb-mi)
+    (setq dape-buffer-window-arrangement 'gud)
+    (setq dape-info-hide-mode-line nil)
+    ;; Pulse source line (performance hit)
+    (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
+    ;; Showing inlay hints
+    (setq dape-inlay-hints t)
+    ;; Kill compile buffer on build success
+    (add-hook 'dape-compile-hook 'kill-buffer))
+#+end_src
+
 * Languages
 
 ** Markdown
@@ -478,6 +497,32 @@ Attach eglot:
   (add-hook 'python-ts-mode-hook 'eglot-ensure)
   (add-hook 'python-ts-mode-hook 'eglot-ensure)
 #+end_src
+
+Pet:
+
+#+begin_src emacs-lisp
+  (use-package dash
+    :load-path "packages/dash.el")
+
+  (use-package s
+    :load-path "packages/s.el")
+
+  (use-package f
+    :load-path "packages/f.el")
+
+  (use-package pet
+    :load-path "packages/emacs-pet"
+    :config
+    (add-hook 'python-base-mode-hook (lambda ()
+                                       (setq-local python-shell-interpreter (pet-executable-find "python")
+                                                   python-shell-virtualenv-root (pet-virtualenv-root))
+                                       (setq-local dap-python-executable python-shell-interpreter)
+                                       (pet-mode)
+                                       (setq-local dap-python-executable python-shell-interpreter))
+              -10)
+
+    )
+      #+end_src
 
 ** Rust
 
