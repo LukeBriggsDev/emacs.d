@@ -29,7 +29,7 @@ Compat
 Turn off warnings to avoid treemacs window errors:
 
 #+begin_src emacs-lisp
-  ;(setq warning-minimum-level :emergency)
+  (setq warning-minimum-level :emergency)
 #+end_src
 
 
