@@ -3,11 +3,18 @@
 
 * General Setup
 
+Path
+
+#+begin_src emacs-lisp
+  (add-to-list 'exec-path "~/.local/bin")
+  (add-to-list 'exec-path "~/.cargo/bin")
+#+end_src
+
 Compat
 
 #+begin_src emacs-lisp
   (use-package compat
-    :load-path "package/compat/")
+    :load-path "packages/compat/")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -23,6 +30,12 @@ Compat
   ;; Delete trailing whitespace before saving buffers
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
+
+#+begin_src emacs-lisp
+  ;; allow remembering risky variables
+  (defun risky-local-variable-p (sym &optional _ignored) nil)
+#+end_src
+
 
 ** Warnings
 
@@ -265,6 +278,13 @@ Set tab-width:
   (setq tab-width 4)
 #+end_src
 
+Enable spell checking
+
+#+begin_src emacs-lisp
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+#+end_src
+
 ** Apheleia Formatting
 
 #+begin_src emacs-lisp
@@ -433,6 +453,13 @@ Projectile
 #+end_src
 
 * Languages
+
+** Text
+#+begin_src emacs-lisp
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+                 '(text-mode . ("harper-ls" "--stdio"))))
+#+end_src
 
 ** Markdown
 
