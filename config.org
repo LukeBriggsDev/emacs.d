@@ -42,7 +42,7 @@ Compat
 Turn off warnings to avoid treemacs window errors:
 
 #+begin_src emacs-lisp
-  (setq warning-minimum-level :emergency)
+ ; (setq warning-minimum-level :emergency)
 #+end_src
 
 
@@ -312,15 +312,18 @@ Magit
     :load-path "packages/llama/")
 
   (use-package with-editor
-    :load-path "packages/with-editor/lisp/")
+    :load-path "packages/with-editor/")
 
   (use-package transient
-    :load-path "packages/transient/lisp/")
+    :load-path "packages/transient/")
+
+  (use-package magit-section
+    :load-path "packages/magit-section/")
 
   (use-package magit
-    :load-path "packages/magit/lisp/"
+    :load-path "packages/magit/"
     :after llama with-editor transient)
-#+end_src
+      #+end_src
 
 Projectile
 
