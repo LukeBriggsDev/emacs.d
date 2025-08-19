@@ -8,6 +8,7 @@ Path
 #+begin_src emacs-lisp
   (add-to-list 'exec-path "~/.local/bin")
   (add-to-list 'exec-path "~/.cargo/bin")
+  (add-to-list 'exec-path "/usr/bin")
 #+end_src
 
 Compat
@@ -70,7 +71,7 @@ Turn off warnings to avoid treemacs window errors:
       (set-face-attribute 'markdown-header-face-1 nil :height 1.5)
       (set-face-attribute 'markdown-header-face-2 nil :height 1.4)
       (set-face-attribute 'markdown-header-face-3 nil :height 1.2))
-
+      (set-face-attribute 'markdown-table-face nil :family "IBM Plex Mono")
 
     (add-hook 'org-mode-hook #'my-org-faces)
     (add-hook 'markdown-mode-hook #'my-md-faces)
